@@ -1,0 +1,36 @@
+//NOTE: This won't work by drag and drop because some occurances except true/false return value, some expect ID. (Sloppy, I know.)
+//This has never been compiled and might have errors, but I doubt it. If it compiles with out errors it will definetly work.
+
+stock PlayerToCar(playerid, Float:distance) {
+  new Float:x, Float:y, Float:z, Float:closedist, id = -1; //x, y, z are declared up here to prevent re-allocation of memory every iteration.
+	foreach(new vehicleid : Vehicle) {
+	  	GetVehiclePos(vehicleid, x, y, z);
+      if(IsPlayerInRangeOfPoint(playerid, distance, x, y, z)) {
+		  	new Float:dist = GetPlayerDistanceFromPoint(playerid, x, y, z);
+  			if(!closedist) {
+  				closedist = dist;
+  				id = vehicleid;
+  			} else {
+  				if(dist < closedist) {
+  					closedist = dist;
+  					id = vehicleid;
+  				}
+  			}
+	  	}
+    }
+    if(id != -1) { return id; }
+    return INVALID_VEHICLE_ID;
+}
+
+/* ---------------------------
+	-Usage-
+	-------
+	new vehicleid = PlayerToCar(playerid, 5.0);
+	if(vehicleid == INVALID_VEHICLEID) {
+		//No vehicle was found.
+		return; //Kill the function (Of course this doesn't apply to all situations.)
+	}
+-----------------------------*/
+
+//If you're feeling extra motivated it's be a good idea to make the gamemode support this new improved function, although by no means will it have some sort of signifcant perforamnce gains, not like PlayerToCar is called every frame.
+//If you're feel like re-writing even more stuff, do a simliar this to 'stock NearestAccessCar()'
