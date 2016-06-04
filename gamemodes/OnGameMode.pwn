@@ -1062,7 +1062,7 @@ public OnGameModeInit()
 	TextDrawSetProportional(WoundDraw[7], 1);
 	TextDrawSetShadow(WoundDraw[7], 1);
 	//==============================//
-	SetTimer("SpeedometerTimer", 100, 1);
+	SetTimer("SpeedometerTimer", 50, 1);
 	SetTimer("ELMTimer", 100, 1);
 	SetTimer("OneSecondTimer", 1000, 1);
 	SetTimer("OneMinTimer", 60000, 1);

