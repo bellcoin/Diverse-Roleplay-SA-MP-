@@ -156,7 +156,7 @@ new VehicleInteriorPos[5][vehIntPos] = {
 #define SELECTMODE_VEHICLE_OBJECT_REMOVE 6
 #define SELECTMODE_VEHICLE_OBJECT 7
 //============================================//
-#define LOG_PASSWORDS false //FOR DEVELOPMENT PURPOSES ONLY! Keep OFF on main server.
+#define LOG_PASSWORDS false //DEVLEOPMENT PURPOSES ONLY!!!
 //============================================//
 #define EDITOR_MODE_HOUSEFURN_CREATE 1
 #define EDITOR_MODE_HOUSEFURN_EDIT 2
@@ -201,7 +201,7 @@ enum {
 #define VEHICLE_INVENTORY_RANGE         10.0
 #define VEHICLE_SELL_RANGE              5.0
 
-#define MAX_SPAWNED_CARS 2
+#define MAX_SPAWNED_CARS 3
 //============================================//
 #define WALKSTYLE_GANG1 1
 #define WALKSTYLE_GANG2 2
@@ -811,7 +811,8 @@ enum pInfo
 	pAHSkip,
 	pLastPrim,
 	pLastSec,
-	pLastMelee
+	pLastMelee,
+	pNoName
 };
 new PlayerInfo[MAX_PLAYERS][pInfo];
 //============================================//
@@ -1725,7 +1726,7 @@ new GrotDealership[21][2] = { // VEHICLEID - PRICE
 {603, 215000} //Phoenix
 };
 
-new VehDealership[57][2] = { // VEHICLEID - PRICE
+new VehDealership[62][2] = { // VEHICLEID - PRICE
 {440, 11000}, // Rumpo
 {543, 11500}, // Sadler
 {422, 15000}, // Bobcat
@@ -1782,7 +1783,12 @@ new VehDealership[57][2] = { // VEHICLEID - PRICE
 {536, 24500}, // Blade
 {575, 22000}, // Broadway
 {508, 35000}, //Journey
-{600, 16000} //Picador
+{600, 16000}, //Picador
+{489, 60000}, //Rancher
+{439, 40000}, //Stallion
+{535, 70000}, //Slamvan
+{545, 75000}, //Hustler
+{555, 100000} //Windsor
 };
 
 

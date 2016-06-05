@@ -2046,12 +2046,12 @@ COMMAND:setsub(playerid, params[])
 	{
 	    if (GetPVarInt(playerid, "PlayerLogged") == 0) return SendClientMessage(playerid, COLOR_WHITE, "You must be logged in to use this.");
 	    if(type < 0 || type > 1) return SendClientMessage(playerid, COLOR_GREY, "Cannot go under 0 or above 1.");
-		if(GetPVarInt(playerid, "Admin") >= 6)
+		if(GetPVarInt(playerid, "Admin") >= 1337)
 		{
 		    if(IsPlayerConnected(targetid))
 		    {
       		    SetPVarInt(targetid, "MonthDon", type);
-      		    SetPVarInt(targetid, "MonthDonT", GetPVarInt(targetid, "MonthDonT") + 31);
+      		    SetPVarInt(targetid, "MonthDonT", GetPVarInt(targetid, "MonthDonT") + 30);
       		    SendClientMessage(playerid,COLOR_GREY,"Player's subscription Rank & Perks has been given.");
       		    SendClientMessage(targetid,COLOR_GREY,"You have received your monthly subscription Rank and Perks.");
 		    }
@@ -2072,7 +2072,7 @@ COMMAND:setdonate(playerid, params[])
 	{
 	    if (GetPVarInt(playerid, "PlayerLogged") == 0) return SendClientMessage(playerid, COLOR_WHITE, "You must be logged in to use this.");
 	    if(type < 0 || type > 4) return SendClientMessage(playerid, COLOR_GREY, "Cannot go under 0 or above 4.");
-		if(GetPVarInt(playerid, "Admin") >= 6)
+		if(GetPVarInt(playerid, "Admin") >= 1337)
 		{
 		    if(IsPlayerConnected(targetid))
 		    {
@@ -2092,7 +2092,7 @@ COMMAND:setdonate(playerid, params[])
       		            SetPVarInt(targetid, "Changes", 5);
       		        }
       		    }
-      		    SendClientMessage(playerid,COLOR_GREY,"Player's Donate Rank & Perks has been given.");
+      		    SendClientMessage(playerid,COLOR_GREY,"Players Donate Rank & Perks have been given.");
       		    SendClientMessage(targetid,COLOR_GREY,"You have received your Donation Rank and Perks.");
 		    }
 		}
@@ -2195,6 +2195,7 @@ COMMAND:setstat(playerid, params[])
 		    }
 		    else if(strcmp(type, "DonateRank", true) == 0)
 		    {
+				if(GetPVarInt(playerid, "Admin") < 11) return error(playerid, "Owner only!");
 		        SetPVarInt(targetid, "DonateRank", amount);
 		        OnPlayerDataSave(targetid);
 				format(string, sizeof(string),"You have set %s's %s to %d", PlayerName(targetid), type,amount);
@@ -9647,7 +9648,7 @@ COMMAND:m(playerid, params[])
 	    	    case 2: format(string, sizeof(string), "[LSFD %s:o< %s]", sendername, text);
 	    	}
 			ProxDetector(60.0, playerid, string,COLOR_YELLOW);
-			for(new h = 0; h < MAX_HOUSES; h++)
+			for(new h = 1; h < MAX_HOUSES; h++)
 			{
 	    		if(IsPlayerInRangeOfPoint(playerid,10.0, HouseInfo[h][hXo], HouseInfo[h][hYo], HouseInfo[h][hZo]))
 	    		{
@@ -13540,6 +13541,7 @@ COMMAND:banacc(playerid, params[])
 	return 1;
 }
 //============================================//
+ALTCOMMAND:clothing->items;
 COMMAND:items(playerid, params[])
 {
     if (GetPVarInt(playerid, "PlayerLogged") == 0) return SendClientMessage(playerid, COLOR_WHITE, "You must be logged in to use this.");
@@ -15151,6 +15153,7 @@ COMMAND:drop(playerid, params[])
 			scm(playerid, COLOR_WHITE, "Cigarette discarded.");
 		} else if(strcmp(type, "matpack", true) == 0) {
 			DeletePVar(playerid, "holdingMP");
+			SetPlayerSpecialAction(playerid, 0);
 			if(IsPlayerAttachedObjectSlotUsed(playerid, HOLDOBJECT_CLOTH4)) RemovePlayerAttachedObject(playerid, HOLDOBJECT_CLOTH4);
 			scm(playerid, COLOR_WHITE, "Material pack discarded.");	
 		} else if(strcmp(type, "weapon", true) == 0) {
@@ -15415,6 +15418,7 @@ COMMAND:loadpack(playerid, params[])
 	if(GetPVarInt(playerid, "holdingMP") != 1) return scm(playerid, COLOR_GREY, "You aren't carrying a materials package!");
 	if(VehicleInfo[trailer][vMats] > 8001) return scm(playerid, COLOR_GREY, "This trailer is full!");
 	SetPVarInt(playerid, "holdingMP", 0);
+	SetPlayerSpecialAction(playerid, 0);
 	ClearAnimations(playerid);
 	if(IsPlayerAttachedObjectSlotUsed(playerid, HOLDOBJECT_CLOTH4)) RemovePlayerAttachedObject(playerid, HOLDOBJECT_CLOTH4);
 	VehicleInfo[trailer][vMats] = VehicleInfo[trailer][vMats]+2000;
@@ -17270,7 +17274,7 @@ COMMAND:toggleoutdoorvehiclefurn(playerid, params[])
 	if(GetPVarInt(playerid, "Admin") < 6) return SendClientMessage(playerid, COLOR_GREY, "You do not have access to this command.");
 	if(outdoor_vehicle_furn == 0) { //Enable
 		outdoor_vehicle_furn = 1;
-		foreach(new vehicleid : Vehicle) {
+		foreach(new vehicleid : Vehicle) { //NOTE: We don't have to load furniture all over again, but since this is rarely called I'd prefer it in-case I want to SQL-modify my vehicle attachments etc. Not like it'll hurt performance it's command-based.
 			if(VehicleInfo[vehicleid][vType] == VEHICLE_PERSONAL && VehicleInfo[vehicleid][vID] != 0) {
 				new query[128];
 				mysql_format(handlesql, query, sizeof(query), "SELECT * FROM vehiclefurn WHERE VID=%d", VehicleInfo[vehicleid][vID]);
@@ -17380,3 +17384,42 @@ COMMAND:shipmenttimeleft(playerid, params[])
 	return 1;
 }
 //============================================// 
+ALTCOMMAND:tognicks->tognametags;
+COMMAND:tognametags(playerid, params[])
+{
+	if(GetPVarInt(playerid, "Delay") > GetCount()) return SendClientMessage(playerid, COLOR_LIGHTRED, "You must wait before performing this command!");
+	SetPVarInt(playerid, "Delay", GetCount()+1000);
+	switch(PlayerInfo[playerid][pNoName]) {
+		case 0: {
+			foreach(new i : Player) { 
+				ShowPlayerNameTagForPlayer(playerid, i, 0); 
+			}
+			PlayerInfo[playerid][pNoName] = 1;
+			SendClientMessage(playerid, COLOR_WHITE, "Name-tags disabled!");
+			return 1;
+		}
+		case 1: {
+			new admin = GetPVarInt(playerid, "Admin");
+			foreach(new i : Player) { 
+				if(GetPVarInt(playerid, "MaskUse") < 1 || admin > 0) {
+					ShowPlayerNameTagForPlayer(playerid, i, 1); 
+				}
+			}	
+			PlayerInfo[playerid][pNoName] = 0;
+			SendClientMessage(playerid, COLOR_WHITE, "Name-tags enabled!");
+			return 1;			
+		}
+	}
+	return 1;
+}
+//============================================//
+ALTCOMMAND:destroycp->removecp;
+COMMAND:removecp(playerid, params[])
+{
+	if(GetPVarInt(playerid, "Delay") > GetCount()) return SendClientMessage(playerid, COLOR_LIGHTRED, "You must wait before performing this command!");
+	SetPVarInt(playerid, "Delay", GetCount()+1000);
+	DisablePlayerCheckpoint(playerid);
+	SendClientMessage(playerid, COLOR_WHITE, "Checkpoint disabled!");
+	return 1;
+}
+//============================================//

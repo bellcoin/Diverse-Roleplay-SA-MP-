@@ -10,7 +10,7 @@
 #define MAX_PDATA_FIELDS 500
 
 /*
-#define TYPE_INTEGER 0
+#define TYPE_INTEGER 0;
 #define TYPE_FLOAT 1;
 #define TYPE_STRING 2;
 */

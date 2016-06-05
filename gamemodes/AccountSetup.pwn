@@ -105,9 +105,7 @@ public OnAccountCheck(playerid, type)
 		    SetPVarInt(playerid, "AccountExist", 1);
 		    if(type == 1)
 		    {
-				SendClientMessage(playerid, COLOR_LIGHTBLUE, "IMPORTANT: Passwords have been re-hashed. Go to www.diverseroleplay.org/ucp/ to recover your account."); //TODO: Remove me.
-				SendClientMessage(playerid, COLOR_LIGHTBLUE, "NOTE: Click the 'Request Password' button on the web-UCP."); //TODO: Remove me.
-				SendClientMessage(playerid, COLOR_LIGHTBLUE, "NOTE: If you did not attach a real email to your account, contact an administrator on Skype/Forums."); //TODO: Remove me.
+				SendClientMessage(playerid, COLOR_LIGHTBLUE, "NOTE: If you ever forget your password you can recover it at ucp.diverseroleplay.org assuming you entered a real email.");
 		        cache_get_row(0, 2, PlayerInfo[playerid][pPass]);
 	            ShowPlayerDialog(playerid,1,DIALOG_STYLE_PASSWORD,"Server Account","Welcome back to Diverse RP, please enter your password to login.","Login", "");
 	        }

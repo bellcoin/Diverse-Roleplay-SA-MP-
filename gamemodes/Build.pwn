@@ -2214,7 +2214,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			        }
 			        if(GetPVarInt(playerid, "CarTicket") >= 1)
 			        {
-			            if(price >= 50000) price -=50000, SetPVarInt(playerid, "CTU", 2);
+			            if(price >= 125000) price -=125000, SetPVarInt(playerid, "CTU", 2);
 			            else price = 0, SetPVarInt(playerid, "CTU", 1);
 			        }
 	                if(GetPlayerMoneyEx(playerid) >= price)
@@ -5038,7 +5038,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			SendClientMessage(playerid, COLOR_LIGHTBLUE, "Your request is being processed...");
 			SetPVarString(playerid, "NCTo", inputtext);
 			new query[82];
-			format(query, sizeof(query), "SELECT * FROM `accounts` WHERE `Name` = '%s'", inputtext);
+			mysql_format(handlesql, query, sizeof(query), "SELECT * FROM `accounts` WHERE `Name` = '%s'", inputtext);
 			mysql_function_query(handlesql, query, true, "HandleNC", "i", playerid);
 		}
 		case 427: //Staff member options
@@ -10976,7 +10976,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 									GameTextForPlayer(playerid, "~r~-$1250", 5000, 1);
 									if(IsPlayerAttachedObjectSlotUsed(playerid, HOLDOBJECT_CLOTH4)) RemovePlayerAttachedObject(playerid, HOLDOBJECT_CLOTH4);
 									SetPlayerAttachedObject( playerid, HOLDOBJECT_CLOTH4, 1575, 1, -0.064613, 0.520760, 0.000000, 0.000000, 84.217391, 0.000000, 1.000000, 1.000000, 1.000000 );
-									ApplyAnimation(playerid, "CARRY", "crry_prtial" ,4.1, 1, 0, 0, 0, 1);
+									SetPlayerSpecialAction(playerid, SPECIAL_ACTION_CARRY);
 									scm(playerid, COLOR_BLUE, "[TIP] {FFFFFF}Use (/loadpack) near your trailer or (/drop matpack) to discard of the package.");
 									mysql_format(handlesql, string, sizeof(string), "UPDATE accounts SET Cash=%d WHERE Name='%s'", GetPlayerMoneyEx(playerid), PlayerInfo[playerid][pUsername]);
 									mysql_tquery(handlesql, string);
@@ -14051,29 +14051,23 @@ stock SaveBizzBackdoor(i)
 	return 1;
 }
 //============================================//
-stock LoadHouses()
-{
+stock LoadHouses() {
 	new query[255];
-	for(new i=1; i< MAX_HOUSES; i++)
-	{
-		format(query, sizeof(query), "SELECT * FROM houses WHERE ID=%d", i);
+	for(new i=1; i< MAX_HOUSES; i++) {
+		mysql_format(handlesql, query, sizeof(query), "SELECT * FROM houses WHERE ID=%d", i);
 		mysql_function_query(handlesql, query, true, "LoadHouseSQL", "d", i);
 	}
 	return 1;
 }
 //============================================//
-
-stock LoadHouseID(id)
-{
+stock LoadHouseID(id) {
 	new query[255];
 	format(query, sizeof(query), "SELECT * FROM houses WHERE ID=%d", id);
 	mysql_function_query(handlesql, query, true, "LoadHouseSQL", "d", id);
 	return 1;
 }
 //============================================//
-
-stock SaveHouses()
-{
+stock SaveHouses() {
 	new query[700];
 	for(new i=1; i< MAX_HOUSES; i++)
 	{
@@ -18122,8 +18116,7 @@ public BuildHouseObject(playerid, objectid, Float:X, Float:Y, Float:Z, Float:rot
 }
 //============================================//
 forward OnBuildHouseObject(houseid, objectid);
-public OnBuildHouseObject(houseid, objectid)
-{
+public OnBuildHouseObject(houseid, objectid) {
 	HouseInfo[houseid][hoDBID][objectid] = cache_insert_id();
 	return 1;
 }
@@ -22925,7 +22918,7 @@ public OnPlayerEntersDealership(playerid) {
 stock MaxVehicles(playerid)
 {
 	if(GetPVarInt(playerid, "MonthDon") > 0) return VEHICLE_MAX_AMOUNT+2;
-	if(GetPVarInt(playerid, "DonateRank") > 0) return VEHICLE_MAX_AMOUNT+1;
+	if(GetPVarInt(playerid, "DonateRank") > 1) return VEHICLE_MAX_AMOUNT+1;
 	return VEHICLE_MAX_AMOUNT;
 }
 //============================================//
