@@ -641,7 +641,7 @@ public OnGameModeInit()
 	    CreateDynamicMapIcon(Dealerships[de][0], Dealerships[de][1], Dealerships[de][2], 53, COLOR_YELLOW);
 	}
 	//==============================//
-	for(new jb = 0; jb < MAX_JOBS; jb++)
+	for(new jb = 0; jb < sizeof(JobInfo); jb++)
 	{
 	    if(JobInfo[jb][jID] >= 1)
 	    {

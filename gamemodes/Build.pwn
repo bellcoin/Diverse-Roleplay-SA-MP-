@@ -118,7 +118,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		{
 		    if(!response) return true;
 		    new foundid = -1;
-		    for(new jb = 0; jb < MAX_JOBS; jb++) {
+		    for(new jb = 0; jb < sizeof(JobInfo); jb++) {
 	            if(JobInfo[jb][jID] >= 1)
 	            {
 	                if(IsPlayerInRangeOfPoint(playerid, 2.0, JobInfo[jb][jX], JobInfo[jb][jY], JobInfo[jb][jZ])) {
@@ -184,7 +184,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		{
 		    if(!response) return true;
 		    new foundid = -1;
-		    for(new jb = 0; jb < MAX_JOBS; jb++)
+		    for(new jb = 0; jb < sizeof(JobInfo); jb++)
 	        {
 	            if(JobInfo[jb][jID] >= 1)
 	            {
@@ -10061,7 +10061,7 @@ public OnPlayerPickUpDynamicPickup(playerid, pickupid)
         }
 	}
 	
-    for(new jb = 0; jb < MAX_JOBS; jb++)
+    for(new jb = 0; jb < sizeof(JobInfo); jb++)
 	{
 	    if(JobInfo[jb][jID] >= 1)
 	    {
@@ -10416,7 +10416,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 						ShowPlayerDialog(playerid, 543, DIALOG_STYLE_LIST, "Dealership", "Purchase Vehicle\nVehicle Upgrades", "Select", "Close");
 					}
 				}
-				for(new jb = 0; jb < MAX_JOBS; jb++)
+				for(new jb = 0; jb < sizeof(JobInfo); jb++)
 				{
 					if(JobInfo[jb][jID] >= 1)
 					{

@@ -228,7 +228,7 @@ enum {
 #define JOB_FARMER_PAY 650
 //============================================//
 #define MAX_LOOT 100
-#define MAX_JOBS 25
+#define sizeof(JobInfo) 25
 #define MAX_INV_SLOTS 15
 #define MAX_HOUSE_SLOTS 21
 #define MAX_VEH_SLOTS 9
