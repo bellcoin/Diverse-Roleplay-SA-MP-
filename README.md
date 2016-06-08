@@ -3,7 +3,7 @@
 
 -You will need the main account because this script has an in-game registration quiz, applications can be reviewed by registrars, helpers, and administrators. Applications are cached and can be reviewed regardless of whether or not the player is online.
 
-*See bottom for common problem!*
+**See bottom for common problem!*
 
 ------------------------------------------------------------------------------------------------------------------------------
 
