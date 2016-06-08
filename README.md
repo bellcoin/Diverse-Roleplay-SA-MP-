@@ -424,3 +424,19 @@
 
 ##SA-MP-watchdog.bat runs samp-server.exe and automatically restarts the server if it were to crash.##
 ##This gamemode incorporates fixes.inc by Y_Less to prevent many exploits/crashes in SA:MP!##
+
+##COMMON PROBLEM:##
+-This gamemode has issues (that are slowly being fixed, maybe all fixed, who knows.) where it tries to access out-of-bounds elements in arrays (even though it checks to see if whatever it's accessing is valid, it's still out of bounds.) and in newer versions of the .NET library (4.5+ I think.) this will cause the gamemode not to function.
+
+#Solutions:#
+-To fix this, you can either get an older version of .NET and it'll all work fine, or more properly read the console output and fix the out-of-bounds errors by replacing whatever's in the loop specified in the error with 'sizeof(ArrayName);'.
+
+Example:
+     new Array[50];
+    for(new i = 0; i < 51; i++) { //something that accesses Array[i] } //This would could an out-of-bounds error, regardless of whether we check if Array[51] is null. (newer versions of .NET enforce this strictly, as they should.)
+    
+    for(new i = 0; i < sizeof(Array); i++) { //something that accesses Array[i] } //This works! This is proper.
+    
+I apologise we had some bad scripters in the past that clearly didn't understand array-boundaries and weren't thinking about the future. Feel free to commit fixes of these instances, I will merge them.
+
+But keep in mind NOT ALL loops with a hard coded number in the less-than comparer will go out of bounds. HOWEVER if they're used to access an array by 'i' or whatever variable that represents our current index in the array ALL loops CAN optionally be switched to 'sizeof(ArrayName)' because it'll return the same value as the hardcoded number. And NO this would not make any difference at run time, during compilation the compiler will deal with these isntances. 
