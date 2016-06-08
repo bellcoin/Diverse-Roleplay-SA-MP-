@@ -434,7 +434,7 @@
 Example:
 
     new Array[50];
-    for(new i = 0; i < 51; i++) { //something that accesses Array[i] } //This would could an out-of-bounds error, regardless of whether we check if Array[51] is null. (newer versions of .NET enforce this strictly, as they should.)
+    for(new i = 0; i < 51; i++) { //something that accesses Array[i] } //This would cause an out-of-bounds error, regardless of whether we check if Array[51] is null. (newer versions of .NET enforce this strictly, as they should.)
     
     for(new i = 0; i < sizeof(Array); i++) { //something that accesses Array[i] } //This works! This is proper.
     
