@@ -442,4 +442,4 @@ Example:
     
 I apologise we had some bad scripters in the past that clearly didn't understand array-boundaries and weren't thinking about the future. Feel free to commit fixes of these instances, I will merge them.
 
-But keep in mind NOT ALL loops with a hard coded number in the less-than comparer will go out of bounds. HOWEVER if they're used to access an array by 'i' or whatever variable that represents our current index in the array ALL loops CAN optionally be switched to 'sizeof(ArrayName)' because it'll return the same value as the hardcoded number. And NO this would not make any difference at run time, during compilation the compiler will deal with these isntances. 
+But keep in mind NOT ALL loops with a hard coded number in the less-than comparer will go out of bounds. HOWEVER if they're used to access an array by 'i' or whatever variable that represents our current index in the array ALL loops CAN optionally be switched to 'sizeof(ArrayName)' because it'll return the same value as the hardcoded number. And NO this would not make any difference at run time, during compilation the compiler will deal with these instances.
