@@ -398,14 +398,11 @@ public OnPlayerEnterCheckpoint(playerid)
             case CHECKPOINT_STORE:
 			{
 			    if(BizzProductC(b) && b != 0) return SendClientMessage(playerid,COLOR_GREY,"There are no products available at this business!");
-			    for(new i = 0; i < sizeof(StoreItems); i++)
-			    {
-			        if(i == 0)
-					{
+			    for(new i = 0; i < sizeof(StoreItems); i++) {
+			        if(i == 0) {
 						format(result, 2000, "%s | $%d", PrintIName(StoreItems[i][0]), StoreItems[i][1]);
 					}
-			        else
-					{
+			        else {
 						format(result, 2000, "%s\n%s | $%d", result, PrintIName(StoreItems[i][0]), StoreItems[i][1]);
 					}
 			    }

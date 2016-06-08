@@ -9514,7 +9514,7 @@ stock PrintIName(InvItem)
 {
 	new result[128], found = 0;
 	result="NULL";
-	for(new i = 0; i < 500; i++)
+	for(new i = 0; i < sizeof(ItemIDs); i++)
 	{
 	    if(ItemIDs[i][ItemID] == InvItem && found == 0)
 	    {
