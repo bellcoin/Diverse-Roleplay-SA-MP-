@@ -432,6 +432,7 @@
 -To fix this, you can either get an older version of .NET and it'll all work fine, or more properly read the console output and fix the out-of-bounds errors by replacing whatever's in the loop specified in the error with 'sizeof(ArrayName);'.
 
 Example:
+
     new Array[50];
     for(new i = 0; i < 51; i++) { //something that accesses Array[i] } //This would could an out-of-bounds error, regardless of whether we check if Array[51] is null. (newer versions of .NET enforce this strictly, as they should.)
     
