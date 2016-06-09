@@ -431,18 +431,18 @@
 ##This gamemode incorporates fixes.inc by Y_Less to prevent many exploits/crashes in SA:MP!##
 
 ##COMMON PROBLEMS:##
-[Problem: Gamemode won't work, no errors, or out-of-bounds errors.]
+*[Problem: Gamemode won't work, no errors, or out-of-bounds errors.]*
 
 	-This gamemode has issues (that are slowly being fixed, maybe all fixed, who knows.) where it tries to access out-of-bounds elements in arrays (even though it checks to see if whatever it's accessing is valid, it's still out of bounds.) and in newer versions of the .NET library (4.5+ I think.) this will cause the gamemode not to function.
 
-[Problem: Stuck on spawn-selection textdraw screen.]
+*[Problem: Stuck on spawn-selection textdraw screen.]*
 
 	-This is caused by one of two things:
 	1) GetCount() has overflowed. (After about 24 days of computer NOT game server up-time GetCount() surpasses the 32-bit integer limit.)
 	2) One or more MySQL accounts has a 'HouseKey' value that points to a non-existant business. (Won't happen during normal server operation, this issue will be caused by removing houses from MySQL or manually settings HouseKey values, it's NOT the gamemodes fault.)
 
 #Solutions:#
-[Solution: Gamemode won't work, no errors, or out-of-bounds errors.]
+*[Solution: Gamemode won't work, no errors, or out-of-bounds errors.]*
 
 -To fix this, you can either get an older version of .NET and it'll all work fine, or more properly read the console output and fix the out-of-bounds errors by replacing whatever's in the loop specified in the error with 'sizeof(ArrayName);'.
 
@@ -461,8 +461,8 @@ In the case of dialog related out-of-bounds errors, it's generally caused when w
 
 Example of issue, and fix: https://github.com/Codeblockz/Diverse-Roleplay-SA-MP-/commit/a0c66b05a2a48f67a9b8b1994b79804307a66f2d
 
-[Solution: Stuck on spawn-selection textdraw.]
+*[Solution: Stuck on spawn-selection textdraw.]*
 
 	1) Restart the computer that's hosting the game-server, not just the game-server itself. This must be done once every ~24 days for SA:MP servers to function correctly regardless of what script you're running.
-	2) Run the following query: *UPDATE accounts SET HouseKey=0,BizzKey=0,Member=0;* 
+	2) Run the following query:	UPDATE accounts SET HouseKey=0,BizzKey=0,Member=0;
 	   The query sets all accounts owned house, owned business, and current faction values to 0. (All the values that can affect the spawn-selection textdraw.)
