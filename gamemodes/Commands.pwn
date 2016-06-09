@@ -11792,7 +11792,7 @@ COMMAND:putgun(playerid, params[])
 		    	    case 126: am=80;
 		    	    case 127: am=60;
 		        }
-			    amount = am;
+			    if(amount > am) { amount = am; }
 			}
 		    PlayerInfo[playerid][pPlayerAmmo]=amount;
 		    if(PlayerInfo[playerid][pAmmoType] == 0) {
