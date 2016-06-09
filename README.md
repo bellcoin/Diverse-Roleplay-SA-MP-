@@ -465,5 +465,7 @@ Example of issue, and fix: https://github.com/Codeblockz/Diverse-Roleplay-SA-MP-
 
 1) Restart the computer that's hosting the game-server, not just the game-server itself. This must be done once every ~24 days for SA:MP servers to function correctly regardless of what script you're running.
 2) Run the following query:
+
 	UPDATE accounts SET HouseKey=0,BizzKey=0,Member=0;
-   The query sets all accounts owned house, owned business, and current faction values to 0. (All the values that can affect the spawn-selection textdraw.)
+	
+The query sets all accounts owned house, owned business, and current faction values to 0. (All the values that can affect the spawn-selection textdraw.)
