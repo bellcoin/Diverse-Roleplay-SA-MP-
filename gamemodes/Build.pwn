@@ -2065,9 +2065,6 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		case 35: // LSPD ARMOURY DIALOG
 		{
 		    if(!response) return true;
-		    if(PDItems[listitem][0] == 1000) return SetPlayerArmourEx(playerid, 99.0);
-		    if(PDItems[listitem][0] == 1001) return SetPlayerHealth(playerid, 100.0);
-		    if(!CheckInv(playerid)) return SendClientMessage(playerid, COLOR_WHITE, "Your inventory is currently full!");
 		    if(listitem == sizeof(PDItems))
 		    {
 		        ResetPlayerWeaponsEx(playerid);
@@ -2088,6 +2085,9 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		    }
 			else
 			{
+				if(PDItems[listitem][0] == 1000) return SetPlayerArmourEx(playerid, 99.0);
+				if(PDItems[listitem][0] == 1001) return SetPlayerHealth(playerid, 100.0);
+				if(!CheckInv(playerid)) return SendClientMessage(playerid, COLOR_WHITE, "Your inventory is currently full!");
 			    switch(PDItems[listitem][0])
 			    {
 			        case 1 .. 99:
