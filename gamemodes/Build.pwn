@@ -11120,33 +11120,8 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 							}
 						}
 					}
-					//=========//
-					if(PlayerInfo[playerid][pPlayerWeapon] > 0 && PlayerInfo[playerid][pPlayerAmmo] == 0 && GetPlayerWeapon(playerid) == 0)
-					{
-						new found = 0;
-						new ammo, id;
-						for(new i = 0; i < MAX_INV_SLOTS; i++)
-						{
-							if(PlayerInfo[playerid][pInvItem][i] >= 100 && PlayerInfo[playerid][pInvItem][i] <= 199)
-							{
-								ammo = CompatAmmo(playerid, PlayerInfo[playerid][pInvItem][i]);
-								if(ammo > 0) {
-								found++, id = i; 
-								break;}
-							}
-						}
-						if(found == 0) return true; // block leaks
-						//==========//
-						if(GetPVarInt(playerid, "TogUnhol") == 0) {
-						ApplyAnimation(playerid, "SILENCED", "Silence_reload", 3.0, 0, 0, 0, 0, 0); }
-						//==========//
-						GivePlayerWeaponEx(playerid, PlayerInfo[playerid][pPlayerWeapon], PlayerInfo[playerid][pInvQ][id]);
-						PlayerInfo[playerid][pSerial]=PlayerInfo[playerid][pInvS][id];
-						//==========//
-						format(str, 128, "%s reloaded with '%s'!", PrintIName(PlayerInfo[playerid][pPlayerWeapon]), PrintIName(PlayerInfo[playerid][pInvItem][id]));
-						SendClientMessage(playerid, COLOR_WHITE, str);
-						//==========//
-						RemoveInvItem(playerid, PlayerInfo[playerid][pInvItem][id], 0, id);
+					if(PlayerInfo[playerid][pPlayerWeapon] > 0 && PlayerInfo[playerid][pPlayerAmmo] == 0 && GetPlayerWeapon(playerid) == 0) {
+						cmd_reload(playerid, "");
 						return true;
 					}
 				}

@@ -12892,7 +12892,7 @@ COMMAND:engine(playerid, params[])
 //============================================//
 COMMAND:reload(playerid, params[])
 {
-	new str[128], found = 0;
+	new str[128];
     if(GetPlayerState(playerid) == PLAYER_STATE_ONFOOT)
     {
         if(GetPVarInt(playerid, "PlayerLogged") == 1 && GetPVarInt(playerid, "Muted") == 0 && GetPVarInt(playerid, "Dead") == 0)
@@ -12904,19 +12904,19 @@ COMMAND:reload(playerid, params[])
     		    {
     		        if(GetPlayerWeapon(playerid) == 0)
     		        {
-    		            new ammo, id;
+    		            new ammo, id = -1;
     		            for(new i = 0; i < MAX_INV_SLOTS; i++)
     		            {
 							if(PlayerInfo[playerid][pInvItem][i] >= 100 && PlayerInfo[playerid][pInvItem][i] <= 199)
 							{
 								ammo = CompatAmmo(playerid, PlayerInfo[playerid][pInvItem][i]);
 								if(ammo > 0) { 
-									found++, id = i; 
+									id = i; 
 									break;
 								}
 							}
     		            }
-    		            if(found == 0) {
+    		            if(id == -1) {
     		                scm(playerid, -1, "You don't have any magazines for this weapon!");
     		                return 1;
 						}
