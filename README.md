@@ -443,3 +443,7 @@ Example:
 I apologise we had some bad scripters in the past that clearly didn't understand array-boundaries and weren't thinking about the future. Feel free to commit fixes of these instances, I will merge them.
 
 But keep in mind NOT ALL loops with a hard coded number in the less-than comparer will go out of bounds. HOWEVER if they're used to access an array by 'i' or whatever variable that represents our current index in the array ALL loops CAN optionally be switched to 'sizeof(ArrayName)' because it'll return the same value as the hardcoded number. And NO this would not make any difference at run time, during compilation the compiler will deal with these instances.
+
+In the case of dialog related out-of-bounds errors, it's generally caused when we try to access an array based off our 'listitem' selection BEFORE checking if 'listitem >= sizeof(Array)'. This causes an array index out of bounds error on newer .Net versions, as it should, because when we select the "Added Option" (It'd be a selection that's not auto-filled by traversing over the array.) the 'listitem' of this option is greater than the max bound of the array.
+
+Example of issue, and fix: https://github.com/Codeblockz/Diverse-Roleplay-SA-MP-/commit/a0c66b05a2a48f67a9b8b1994b79804307a66f2d
