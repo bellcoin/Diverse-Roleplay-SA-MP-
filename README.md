@@ -425,6 +425,8 @@
 
 -Also PData can be improved by changing the ALTER TABLE statement to check if the column exists yet, not that it matters.
 
+-I would recommend taking the contents of 'RPData/maps/stripmall.ini' and making the objects with CreateObject() the server doesn't simulate streamed objects when players aren't around them so vehicles can fall through the floor.
+
 ##SA-MP-watchdog.bat runs samp-server.exe and automatically restarts the server if it were to crash.##
 ##This gamemode incorporates fixes.inc by Y_Less to prevent many exploits/crashes in SA:MP!##
 
