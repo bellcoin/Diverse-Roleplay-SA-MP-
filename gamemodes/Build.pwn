@@ -4161,7 +4161,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				    if(response)
 				    {
 				        if(CheckInv(playerid) == 0) return error(playerid, "Your inventory is full.");
-						if(DisabledWeapon(GetPVarInt(playerid, "ConnectTime"), VehicleInfo[kez][vGBID][listitem])) return error(playerid, "You need 8 hours played to use take this.");
+						if(DisabledWeapon(GetPVarInt(playerid, "ConnectTime"), VehicleInfo[kez][vInvID][listitem])) return error(playerid, "You need 8 hours played to use take this.");
 				        if(VehicleInfo[kez][vInvID][listitem] == 0) return error(playerid, "Slot is empty.");
 				        if(VehicleInfo[kez][vInvID][listitem] <= 800 || VehicleInfo[kez][vInvID][listitem] >= 1002) {
 						GiveInvItem(playerid, VehicleInfo[kez][vInvID][listitem], VehicleInfo[kez][vInvQ][listitem], VehicleInfo[kez][vInvE][listitem], VehicleInfo[kez][vInvS][listitem]); }
