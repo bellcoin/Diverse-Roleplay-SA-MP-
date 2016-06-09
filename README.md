@@ -432,33 +432,37 @@
 
 ##COMMON PROBLEMS:##
 [Problem: Gamemode won't work, no errors, or out-of-bounds errors.]
+
 	-This gamemode has issues (that are slowly being fixed, maybe all fixed, who knows.) where it tries to access out-of-bounds elements in arrays (even though it checks to see if whatever it's accessing is valid, it's still out of bounds.) and in newer versions of the .NET library (4.5+ I think.) this will cause the gamemode not to function.
 
 [Problem: Stuck on spawn-selection textdraw screen.]
+
 	-This is caused by one of two things:
 	1) GetCount() has overflowed. (After about 24 days of computer NOT game server up-time GetCount() surpasses the 32-bit integer limit.)
 	2) One or more MySQL accounts has a 'HouseKey' value that points to a non-existant business. (Won't happen during normal server operation, this issue will be caused by removing houses from MySQL or manually settings HouseKey values, it's NOT the gamemodes fault.)
 
 #Solutions:#
 [Solution: Gamemode won't work, no errors, or out-of-bounds errors.]
-	-To fix this, you can either get an older version of .NET and it'll all work fine, or more properly read the console output and fix the out-of-bounds errors by replacing whatever's in the loop specified in the error with 'sizeof(ArrayName);'.
-	
-	Example:
-	
-	    new Array[50];
-	    for(new i = 0; i < 51; i++) { //something that accesses Array[i] } //This would cause an out-of-bounds error, regardless of whether we check if Array[51] is null. (newer versions of .NET enforce this strictly, as they should.)
-	    
-	    for(new i = 0; i < sizeof(Array); i++) { //something that accesses Array[i] } //This works! This is proper.
-	    
-	I apologise we had some bad scripters in the past that clearly didn't understand array-boundaries and weren't thinking about the future. Feel free to commit fixes of these instances, I will merge them.
-	
-	But keep in mind NOT ALL loops with a hard coded number in the less-than comparer will go out of bounds. HOWEVER if they're used to access an array by 'i' or whatever variable that represents our current index in the array ALL loops CAN optionally be switched to 'sizeof(ArrayName)' because it'll return the same value as the hardcoded number. And NO this would not make any difference at run time, during compilation the compiler will deal with these instances.
-	
-	In the case of dialog related out-of-bounds errors, it's generally caused when we try to access an array based off our 'listitem' selection BEFORE checking if 'listitem >= sizeof(Array)'. This causes an array index out of bounds error on newer .Net versions, as it should, because when we select the "Added Option" (It'd be a selection that's not auto-filled by traversing over the array.) the 'listitem' of this option is greater than the max bound of the array.
-	
-	Example of issue, and fix: https://github.com/Codeblockz/Diverse-Roleplay-SA-MP-/commit/a0c66b05a2a48f67a9b8b1994b79804307a66f2d
+
+-To fix this, you can either get an older version of .NET and it'll all work fine, or more properly read the console output and fix the out-of-bounds errors by replacing whatever's in the loop specified in the error with 'sizeof(ArrayName);'.
+
+Example:
+
+    new Array[50];
+    for(new i = 0; i < 51; i++) { //something that accesses Array[i] } //This would cause an out-of-bounds error, regardless of whether we check if Array[51] is null. (newer versions of .NET enforce this strictly, as they should.)
+    
+    for(new i = 0; i < sizeof(Array); i++) { //something that accesses Array[i] } //This works! This is proper.
+    
+I apologise we had some bad scripters in the past that clearly didn't understand array-boundaries and weren't thinking about the future. Feel free to commit fixes of these instances, I will merge them.
+
+But keep in mind NOT ALL loops with a hard coded number in the less-than comparer will go out of bounds. HOWEVER if they're used to access an array by 'i' or whatever variable that represents our current index in the array ALL loops CAN optionally be switched to 'sizeof(ArrayName)' because it'll return the same value as the hardcoded number. And NO this would not make any difference at run time, during compilation the compiler will deal with these instances.
+
+In the case of dialog related out-of-bounds errors, it's generally caused when we try to access an array based off our 'listitem' selection BEFORE checking if 'listitem >= sizeof(Array)'. This causes an array index out of bounds error on newer .Net versions, as it should, because when we select the "Added Option" (It'd be a selection that's not auto-filled by traversing over the array.) the 'listitem' of this option is greater than the max bound of the array.
+
+Example of issue, and fix: https://github.com/Codeblockz/Diverse-Roleplay-SA-MP-/commit/a0c66b05a2a48f67a9b8b1994b79804307a66f2d
 
 [Solution: Stuck on spawn-selection textdraw.]
+
 	1) Restart the computer that's hosting the game-server, not just the game-server itself. This must be done once every ~24 days for SA:MP servers to function correctly regardless of what script you're running.
 	2) Run the following query: *UPDATE accounts SET HouseKey=0,BizzKey=0,Member=0;* 
 	   The query sets all accounts owned house, owned business, and current faction values to 0. (All the values that can affect the spawn-selection textdraw.)
