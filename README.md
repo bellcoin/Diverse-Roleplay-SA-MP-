@@ -394,6 +394,7 @@
 
 - Added /removecp (/destroycp) so players can destroy active checkpoints.
 - Added Rancher, Stallion, Slamvan, Hustler, and Windsor to the Jefferson dealership.
+- Fixed extended clip infinite ammo exploit. (WOW the extended clip system is ugly.)
 
 #[TODO]#
 - [ ] Baitcar system.
