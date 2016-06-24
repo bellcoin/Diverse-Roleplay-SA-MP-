@@ -10772,6 +10772,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 									SendClientMessage(playerid, COLOR_WHITE, "Use '/exit' or click the door hotkey to leave this vehicle.");
 									if(GetPVarInt(playerid, "DrugTime") == 0) { SetPlayerWeather(playerid, 11); }	
 									PlayerInfo[playerid][pInVehicle] = car;
+									TempFreeze(playerid);
 									LoadRadios(playerid);					
 									return 1;
 								} else SendClientMessage(playerid, COLOR_WHITE, "This vehicle is locked!");
