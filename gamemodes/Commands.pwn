@@ -4023,17 +4023,21 @@ COMMAND:aveh(playerid, params[])
 	    if (GetPVarInt(playerid, "PlayerLogged") == 0) return SendClientMessage(playerid, COLOR_WHITE, "You must be logged in to use this.");
 		if(GetPVarInt(playerid, "Admin") >= 7)
 		{
-			new Float:X,Float:Y,Float:Z,vehicleid;
-			GetPlayerPos(playerid,X,Y,Z);
-			vehicleid = AddStaticVehicleEx(type,X,Y,Z,90.7350, -1, -1, 999999);
-			VehicleInfo[vehicleid][vFuel]=100;
-			VehicleInfo[vehicleid][vWindows]=0;
-			VehicleInfo[vehicleid][vEngine]=0;
-			VehicleInfo[vehicleid][vType]=VEHICLE_ADMIN;
-			Iter_Add(Vehicle, vehicleid);
-			LinkVehicleToInteriorEx(vehicleid, GetPlayerInterior(playerid));
-			SetVehicleVirtualWorldEx(vehicleid, GetPlayerVirtualWorld(playerid));
-			SendClientMessage(playerid,COLOR_WHITE,"Vehicle spawned!");
+			if(type < 400 || type > 611) SendClientMessage(playerid, COLOR_GREY, "USAGE: /aveh [Vehicle-ID (400-611)]");
+		    	else
+		    	{
+				new Float:X,Float:Y,Float:Z,vehicleid;
+				GetPlayerPos(playerid,X,Y,Z);
+				vehicleid = AddStaticVehicleEx(type,X,Y,Z,90.7350, -1, -1, 999999);
+				VehicleInfo[vehicleid][vFuel]=100;
+				VehicleInfo[vehicleid][vWindows]=0;
+				VehicleInfo[vehicleid][vEngine]=0;
+				VehicleInfo[vehicleid][vType]=VEHICLE_ADMIN;
+				Iter_Add(Vehicle, vehicleid);
+				LinkVehicleToInteriorEx(vehicleid, GetPlayerInterior(playerid));
+				SetVehicleVirtualWorldEx(vehicleid, GetPlayerVirtualWorld(playerid));
+				SendClientMessage(playerid,COLOR_WHITE,"Vehicle spawned!");
+			}
 		}
 		else SendClientMessage(playerid, COLOR_LIGHTRED, "You do not have access to this command!");
 	}

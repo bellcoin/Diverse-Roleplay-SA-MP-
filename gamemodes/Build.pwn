@@ -4161,7 +4161,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				    if(response)
 				    {
 				        if(CheckInv(playerid) == 0) return error(playerid, "Your inventory is full.");
-						if(DisabledWeapon(GetPVarInt(playerid, "ConnectTime"), VehicleInfo[kez][vGBID][listitem])) return error(playerid, "You need 8 hours played to use take this.");
+						if(DisabledWeapon(GetPVarInt(playerid, "ConnectTime"), VehicleInfo[kez][vInvID][listitem])) return error(playerid, "You need 8 hours played to use take this.");
 				        if(VehicleInfo[kez][vInvID][listitem] == 0) return error(playerid, "Slot is empty.");
 				        if(VehicleInfo[kez][vInvID][listitem] <= 800 || VehicleInfo[kez][vInvID][listitem] >= 1002) {
 						GiveInvItem(playerid, VehicleInfo[kez][vInvID][listitem], VehicleInfo[kez][vInvQ][listitem], VehicleInfo[kez][vInvE][listitem], VehicleInfo[kez][vInvS][listitem]); }
@@ -5843,7 +5843,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			{
 				case 0:
 				{
-					new oblist[76], idx = 0;
+					new oblist[78], idx = 0;
 					for(new i = 321; i < 398; i++)
 					{
 						oblist[idx] = i;
@@ -5853,7 +5853,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				case 1:
 				{
-					new oblist[25], idx = 0;
+					new oblist[27], idx = 0;
 					for(new i = 700; i < 726; i++)
 					{
 						oblist[idx] = i;
@@ -5863,7 +5863,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				case 2:
 				{
-					new oblist[20], idx = 0;
+					new oblist[22], idx = 0;
 					for(new i = 1000; i < 1021; i++)
 					{
 						oblist[idx] = i;
@@ -5884,7 +5884,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				case 4:
 				{
-					new oblist[30], idx = 0;
+					new oblist[34], idx = 0;
 					for(new i = 5482; i < 5513; i++)
 					{
 						oblist[idx] = i;
@@ -5894,7 +5894,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				case 5:
 				{
-					new oblist[33], idx = 0;
+					new oblist[34], idx = 0;
 					for(new i = 966; i < 999; i++)
 					{
 						oblist[idx] = i;
@@ -5927,7 +5927,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				}
 				case 7:
 				{
-					new oblist[316], idx = 0;
+					new oblist[318], idx = 0;
 					for(new i = 1210; i < 1326; i++)
 					{
 						oblist[idx] = i;
