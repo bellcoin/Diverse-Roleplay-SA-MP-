@@ -469,3 +469,5 @@ Example of issue, and fix: https://github.com/Codeblockz/Diverse-Roleplay-SA-MP-
 	UPDATE accounts SET HouseKey=0,BizzKey=0,Member=0;
 	
 The query sets all accounts owned house, owned business, and current faction values to 0. (All the values that can affect the spawn-selection textdraw.)
+
+*More common problems and solutions at: http://forum.sa-mp.com/showthread.php?t=610343*
