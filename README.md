@@ -440,7 +440,9 @@
 	-This is caused by one of two things:
 	1) GetCount() has overflowed. (After about 24 days of computer NOT game server up-time GetCount() surpasses the 32-bit integer limit.)
 	2) One or more MySQL accounts has a 'HouseKey' value that points to a non-existant business. (Won't happen during normal server operation, this issue will be caused by removing houses from MySQL or manually settings HouseKey values, it's NOT the gamemodes fault.)
+	
 *[Problem: Error: Field 'x' doesn't have a default value.]*
+	
 	-This is caused by you running your MySQL server in strict mode, see solution in "Solutions" section. 
 	
 #Solutions:#
@@ -473,6 +475,7 @@ Example of issue, and fix: https://github.com/Codeblockz/Diverse-Roleplay-SA-MP-
 The query sets all accounts owned house, owned business, and current faction values to 0. (All the values that can affect the spawn-selection textdraw.)
 
 *[Solution: Error: Field 'x' doesn't have a default value.]*
+
 This is a simple fix, you get MySQL errors like this when you're running your MySQL server in strict mode (with sql_mode containing STRICT_TRANS_TABLES). To fix this simple run a query setting your sql_mode to not contain 'STRICT_TRANS_TABLES', or open your MySQL's config file (generally my.cnf) and edit sql_mode. 
 
 sql_mode = 'NO_ENGINE_SUBSTITUTION'; should be enough. 
