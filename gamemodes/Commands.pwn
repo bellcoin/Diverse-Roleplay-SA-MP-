@@ -1,5 +1,5 @@
 //============================================//
-//=====[ COMMAND SECTION ]=====//
+//============[ COMMAND SECTION ]=============//
 //============================================//
 #define ALTCOMMAND:%1->%2;           \
 COMMAND:%1(playerid, params[])   \
@@ -5124,6 +5124,7 @@ COMMAND:carplate(playerid, params[])
 		    SendClientMessage(playerid,COLOR_GREY,query);
 			if(VehicleInfo[h][vType] == VEHICLE_PERSONAL && VehicleInfo[h][vID] != 0) {
 				format(VehicleInfo[h][vPlate], VEHICLE_PLATE_MAX_LENGTH, "%s", plate);
+				mysql_real_escape_string(plate, plate);
 				mysql_format(handlesql, query, sizeof(query), "UPDATE `vehicles` SET `Plate` = '%e' WHERE `ID` = %i;", plate, VehicleInfo[h][vID]);
 				mysql_tquery(handlesql, query);
 				SendClientMessage(playerid, COLOR_LIGHTBLUE, "Vehicle plated saved as it's an owned vehicle!");
