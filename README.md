@@ -5,6 +5,8 @@
 
 **See bottom for common problems!*
 
+**Check 'Command Logs' in your servers scriptfiles to catch possible injection-exploiters!*
+
 ------------------------------------------------------------------------------------------------------------------------------
 
 - Added ingame UCP.
