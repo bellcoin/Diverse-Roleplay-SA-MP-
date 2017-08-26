@@ -470,7 +470,7 @@ Example of issue, and fix: https://github.com/Codeblockz/Diverse-Roleplay-SA-MP-
 *[Solution: Stuck on spawn-selection textdraw.]*
 
 1) Restart the computer that's hosting the game-server, not just the game-server itself. This must be done once every ~24 days for SA:MP servers to function correctly regardless of what script you're running.
-2) Run the following query:
+2) Run the following query: (WARNING: If #1 fixes this issue DO NOT do this as it's unneccesary.)
 
 	UPDATE accounts SET HouseKey=0,BizzKey=0,Member=0;
 	
